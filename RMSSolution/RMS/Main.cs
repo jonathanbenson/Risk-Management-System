@@ -15,6 +15,17 @@ namespace RMS
 {
     public partial class Main : Form
     {
+        /*
+         * Permissions: 1-3
+         * 
+         * Cost Period: DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
         
 
         private long dbemployeeid; // keeps track of the employee id number
@@ -174,15 +185,32 @@ namespace RMS
 
                 SQLiteDataReader proposalReader = newCommand.ExecuteReader();
 
-                
-
                 while (proposalReader.Read())
                 {
-                    TreeNode proposalNode = new TreeNode(proposalReader.GetString(7));
+                    TreeNode proposalNode = new TreeNode(proposalReader.GetString(4));
                     proposalNode.Tag = "2-" + proposalReader.GetInt32(0).ToString();
                     riskNode.Nodes.Add(proposalNode);
 
-                    
+
+                    // adding trials to proposals...
+
+                    var newestCommand = new SQLiteCommand($"SELECT * FROM Trial WHERE STATUS = 1 AND PROPOSALID = {riskReader.GetInt32(0)}", connection);
+
+                    SQLiteDataReader trialReader = newestCommand.ExecuteReader();
+
+                    while (trialReader.Read())
+                    {
+                        TreeNode trialNode = new TreeNode(trialReader.GetString(3));
+                        trialNode.Tag = "3-" + trialReader.GetInt32(0).ToString();
+                        proposalNode.Nodes.Add(trialNode);
+
+                    }
+
+
+
+                    // end of adding trials to proposals
+
+
                 }
 
 
@@ -229,15 +257,74 @@ namespace RMS
             this.selectedItem = this.treeView2.SelectedNode;
 
 
-            
+            SQLiteHandler handl = new SQLiteHandler();
 
-            this.textBox4.Text = this.selectedItem.Text;
+            var connection = handl.getConnection();
 
-            
+            connection.Open();
 
-            
+
+            string tag = this.selectedItem.Tag.ToString();
+
+            if (tag[0] == '1')
+                // selected node is a risk
+            {
+                this.displayRisk(tag.Substring(2, tag.Length - 2), ref connection);
+            }
+            else if (tag[0] == '2')
+                // selected node is a proposal
+            {
+                this.displayProposal(tag.Substring(2, tag.Length - 2), ref connection);
+            }
+            else if (tag[0] == '3')
+                // selected node is a trial
+            {
+                this.displayTrial(tag.Substring(2, tag.Length - 2), ref connection);
+            }
+
+            connection.Close();
+
             
         }
+
+
+        // display functions for the information box
+        private void displayRisk(string id, ref SQLiteConnection connection)
+        {
+            var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {id}", connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                this.textBox4.Text = reader.GetInt32(0).ToString();
+            }
+        }
+
+        private void displayProposal(string id, ref SQLiteConnection connection)
+        {
+            var command = new SQLiteCommand($"SELECT * FROM Proposal WHERE STATUS = 1 AND ID = {id}", connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                this.textBox4.Text = reader.GetInt32(0).ToString();
+            }
+        }
+
+        private void displayTrial(string id, ref SQLiteConnection connection)
+        {
+            var command = new SQLiteCommand($"SELECT * FROM Trial WHERE STATUS = 1 AND ID = {id}", connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                this.textBox4.Text = reader.GetInt32(0).ToString();
+            }
+        }
+        // end of display functions for information box
 
         
 

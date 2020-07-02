@@ -33,10 +33,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,9 +53,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(183, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(137, 13);
+            this.label2.Size = new System.Drawing.Size(134, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Risks, Proposals, and Trials";
+            this.label2.Text = "Risks -> Proposals -> Trials";
             // 
             // treeView2
             // 
@@ -95,15 +95,6 @@
             this.groupBox2.Text = "Query Database";
             this.groupBox2.Visible = false;
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(509, 25);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(548, 489);
-            this.textBox4.TabIndex = 8;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -133,6 +124,15 @@
             this.comboBox1.Sorted = true;
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(509, 25);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(548, 489);
+            this.textBox4.TabIndex = 8;
             // 
             // groupBox1
             // 
@@ -196,9 +196,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(506, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
+            this.label4.Size = new System.Drawing.Size(127, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Selected Item";
+            this.label4.Text = "Selected Item Information";
             // 
             // Main
             // 
