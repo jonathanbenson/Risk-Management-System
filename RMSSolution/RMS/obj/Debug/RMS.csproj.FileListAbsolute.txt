@@ -43,3 +43,9 @@ C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debu
 C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.csproj.CopyComplete
 C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.exe
 C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.pdb
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.EmployeeForm.resources
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.EnvironmentForm.resources
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.ProposalForm.resources
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.RiskForm.resources
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.TrialForm.resources
+C:\Users\jbenson\Documents\Cache\Risk-Management-System\RMSSolution\RMS\obj\Debug\RMS.ValidationForm.resources

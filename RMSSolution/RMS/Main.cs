@@ -18,12 +18,30 @@ namespace RMS
         /*
          * Permissions: 1-3
          * 
-         * Cost Period: DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY
+         * Cost Period: INSTANCE, DAILY (1 day), WEEKLY (7 days), MONTHLY (30 days), QUARTERLY (90 days), ANNUALLY (365 days)
          * 
          * 
          * 
+         * QUERY ACTION -> OPEN CORROSPONDING FORM (NON-MODAL) -> VALIDATION FORM (MODAL)
+         * ACTIONS
+         * CREATE ENVIRONMENT
+         * CREATE RISK
+         * CREATE PROPOSAL
+         * CREATE TRIAL
          * 
          * 
+         * ***CORROSPONDING PATHS CANNOT BE EDITED***
+         * MODIFY ENVIRONMENT
+         * MODIFY RISK
+         * MODIFY PROPOSAL
+         * MODIFY TRIAL
+         * 
+         * DELETE ENVIRONMENT
+         * DELETE RISK
+         * DELETE PROPOSAL
+         * DELETE TRIAL
+         * 
+         * MANAGE EMPLOYEES -> MANAGE EMPLOYEES FORM -> VALIDATION FORM
          * 
          */
         
@@ -79,19 +97,18 @@ namespace RMS
 
             // end of employee authentication
 
-            this.queryInitialVisibility(this.employeePermission);
+           
+            if (employeePermission == 3)
+            {
+                this.comboBox1.Items.Add("MANAGE EMPLOYEES");
+            }
+
 
             connection.Close();
         }
 
 
-        private void queryInitialVisibility(long permission)
-        {
-            
-            
-
-            
-        }
+        
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -154,6 +171,8 @@ namespace RMS
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            
+
 
             this.comboBox1.Items.Clear();
 
@@ -230,11 +249,25 @@ namespace RMS
 
             // updating selected item type and selected item description text boxes, as well as combo box
 
-            
+            // updating of right text box label
+            this.label4.Text = $"Environment #{this.selectedItem.Tag}";
             this.textBox4.Text = this.selectedItem.Text;
 
-            this.comboBox1.Items.Add("CREATE RISK");
-            this.comboBox1.Items.Add("CREATE ENVIRONMENT");
+           
+
+            if (this.employeePermission >= 1)
+            {
+                this.comboBox1.Items.Add("CREATE RISK");
+                this.comboBox1.Items.Add("CREATE ENVIRONMENT");
+            }
+            if (this.employeePermission >= 2)
+            {
+
+            }
+            if (this.employeePermission >= 3)
+            {
+                this.comboBox1.Items.Add("DELETE");
+            }
 
 
             // updating selected item type and selected item description text boxes
@@ -246,7 +279,15 @@ namespace RMS
 
         private void button4_Click(object sender, EventArgs e)
         {
-            return;
+            if (this.comboBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("You must select an action!");
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "MANAGE EMPLOYEES")
+            {
+
+            }
+            
         }
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -269,17 +310,80 @@ namespace RMS
             if (tag[0] == '1')
                 // selected node is a risk
             {
+                // updating of right text box label
+                this.label4.Text = $"Risk #{tag.Substring(2, tag.Length - 2)}";
+
+                // displaying item information in text box to the right
                 this.displayRisk(tag.Substring(2, tag.Length - 2), ref connection);
+
+                // populatitng combo box of actions
+                if (this.employeePermission >= 1)
+                {
+                    this.comboBox1.Items.Add("CREATE PROPOSAL");
+                }
+                if (this.employeePermission >= 2)
+                {
+
+                }
+                if (this.employeePermission >= 3)
+                {
+                    this.comboBox1.Items.Add("DELETE");
+                }
+
+
             }
             else if (tag[0] == '2')
                 // selected node is a proposal
             {
+
+                // updating of right text box label
+                this.label4.Text = $"Proposal #{tag.Substring(2, tag.Length - 2)}";
+
+                // displaying item information in text box to the right
                 this.displayProposal(tag.Substring(2, tag.Length - 2), ref connection);
+
+                // populating combo box of items
+                if (this.employeePermission >= 1)
+                {
+                    this.comboBox1.Items.Add("CREATE TRIAL");
+                }
+                if (this.employeePermission >= 2)
+                {
+
+                }
+                if (this.employeePermission >= 3)
+                {
+                    this.comboBox1.Items.Add("DELETE");
+                }
+
+
             }
             else if (tag[0] == '3')
                 // selected node is a trial
             {
+                // updating of right text box label
+                this.label4.Text = $"Trial #{tag.Substring(2, tag.Length - 2)}";
+
+                // displaying item information in text box to the right
                 this.displayTrial(tag.Substring(2, tag.Length - 2), ref connection);
+
+
+                // populating combo box of items
+                if (this.employeePermission >= 1)
+                {
+
+                }
+                if (this.employeePermission >= 2)
+                {
+
+                }
+                if (this.employeePermission >= 3)
+                {
+                    this.comboBox1.Items.Add("DELETE");
+                }
+
+
+
             }
 
             connection.Close();
@@ -291,13 +395,25 @@ namespace RMS
         // display functions for the information box
         private void displayRisk(string id, ref SQLiteConnection connection)
         {
+
+            
+
             var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {id}", connection);
 
             SQLiteDataReader reader = command.ExecuteReader();
 
             if (reader.Read())
             {
-                this.textBox4.Text = reader.GetInt32(0).ToString();
+                string text = "";
+
+                text += $"HAZARD: {reader.GetString(6)}\r\n\r\n";
+                text += $"SEVERITY: {reader.GetInt32(3)}\r\n\r\n";
+                text += $"PROBABILITY: {reader.GetInt32(4)}\r\n\r\n";
+                text += $"DETECTABILITY: {reader.GetInt32(5)}\r\n\r\n";
+                text += $"EVALUATION: {reader.GetString(7)}\r\n\r\n";
+                text += $"COST: ${reader.GetInt32(8)} {reader.GetString(9)}";
+
+                this.textBox4.Text = text;
             }
         }
 
@@ -307,9 +423,17 @@ namespace RMS
 
             SQLiteDataReader reader = command.ExecuteReader();
 
+            
             if (reader.Read())
             {
-                this.textBox4.Text = reader.GetInt32(0).ToString();
+                string text = "";
+
+                
+                text += $"ANALYSIS: {reader.GetString(3)}\r\n\r\n";
+                text += $"TREATMENT: {reader.GetString(4)}\r\n\r\n";
+                text += $"ESTIMATED NET COST: ${reader.GetInt32(5)} {reader.GetString(6)}";
+
+                this.textBox4.Text = text;
             }
         }
 
@@ -321,7 +445,14 @@ namespace RMS
 
             if (reader.Read())
             {
-                this.textBox4.Text = reader.GetInt32(0).ToString();
+                string text = "";
+
+             
+                text += $"ASSESSMENT: {reader.GetString(3)}\r\n\r\n";
+                text += $"VERDICT: {reader.GetString(4)}\r\n\r\n";
+                text += $"NET COST: ${reader.GetInt32(5)} {reader.GetString(6)}";
+
+                this.textBox4.Text = text;
             }
         }
         // end of display functions for information box
