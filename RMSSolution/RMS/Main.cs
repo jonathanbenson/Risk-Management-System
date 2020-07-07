@@ -18,9 +18,6 @@ namespace RMS
         /*
          * Permissions: 1-3
          * 
-         * Cost Period: INSTANCE, DAILY (1 day), WEEKLY (7 days), MONTHLY (30 days), QUARTERLY (90 days), ANNUALLY (365 days)
-         * 
-         * 
          * 
          * QUERY ACTION -> OPEN CORROSPONDING FORM (NON-MODAL) -> VALIDATION FORM (MODAL)
          * ACTIONS
@@ -36,6 +33,7 @@ namespace RMS
          * MODIFY PROPOSAL
          * MODIFY TRIAL
          * 
+         * ***CANNOT DELETE IF NODE CONTAINS SUBNODES***
          * DELETE ENVIRONMENT
          * DELETE RISK
          * DELETE PROPOSAL
@@ -95,6 +93,8 @@ namespace RMS
                 MessageBox.Show("Invalid Employee ID or Password");
             }
 
+            reader.Close();
+
             // end of employee authentication
 
            
@@ -142,11 +142,12 @@ namespace RMS
             int rootId = reader.GetInt32(0);
 
             TreeNode rootNode = new TreeNode(reader.GetString(3));
-            rootNode.Tag = 0;
+            rootNode.Tag = reader.GetInt32(0);
             treeView1.Nodes.Add(rootNode);
 
             this.populateBrowseEnvironmentTreeHelper(ref rootNode, rootId, connection);
 
+            reader.Close();
             connection.Close();
         }
 
@@ -155,6 +156,7 @@ namespace RMS
             // recursively populating the Environment tree
             var command = new SQLiteCommand($"SELECT * FROM Environment WHERE STATUS = 1 AND PARENTID = {rootId.ToString()}", connection);
 
+            
             SQLiteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -167,6 +169,8 @@ namespace RMS
                     tn.Nodes.Add(newTreeNode);
                 }
             }
+
+            reader.Close();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -179,8 +183,42 @@ namespace RMS
             this.selectedItem = this.treeView1.SelectedNode;
 
             // populating of risks and proposals in the second tree view on the main screen
+
+            // updating of right text box label
+            this.label4.Text = $"Environment #{this.selectedItem.Tag}";
+            this.textBox4.Text = this.selectedItem.Text;
+
+
+            SQLiteHandler handl2 = new SQLiteHandler();
+
+            var connection2 = handl2.getConnection();
+
+            connection2.Open();
+
+            
+
+            var command2 = new SQLiteCommand($"SELECT * FROM Environment WHERE STATUS = 1 AND ID = {this.treeView1.SelectedNode.Tag}", connection2);
+
+            SQLiteDataReader environmentReader = command2.ExecuteReader();
+
+            this.textBox4.Text = $"{this.selectedItem.Text}\r\n\r\n";
+            if (environmentReader.Read())
+            {
+                this.textBox4.Text += environmentReader.GetString(4);
+            }
+
+            environmentReader.Close();
+
+            connection2.Close();
+
             if (treeView1.SelectedNode.Tag == null)
+            {
                 return;
+            }
+            
+
+
+            //
 
             this.treeView2.Nodes.Clear();
 
@@ -225,14 +263,14 @@ namespace RMS
 
                     }
 
-
+                    trialReader.Close();
 
                     // end of adding trials to proposals
 
 
                 }
 
-
+                proposalReader.Close();
                 // done with adding proposal underneath the risks
 
                 
@@ -240,6 +278,7 @@ namespace RMS
 
 
             }
+            riskReader.Close();
             connection.Close();
 
             // end of populating of risks and proposals in the second tree view on the main screen
@@ -249,11 +288,11 @@ namespace RMS
 
             // updating selected item type and selected item description text boxes, as well as combo box
 
-            // updating of right text box label
-            this.label4.Text = $"Environment #{this.selectedItem.Tag}";
-            this.textBox4.Text = this.selectedItem.Text;
+            
 
-           
+
+
+            // updating combo box items
 
             if (this.employeePermission >= 1)
             {
@@ -262,11 +301,12 @@ namespace RMS
             }
             if (this.employeePermission >= 2)
             {
-
+                this.comboBox1.Items.Add("MODIFY");
             }
             if (this.employeePermission >= 3)
             {
                 this.comboBox1.Items.Add("DELETE");
+                this.comboBox1.Items.Add("MANAGE EMPLOYEES");
             }
 
 
@@ -285,9 +325,69 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "MANAGE EMPLOYEES")
             {
+                EmployeeForm ef = new EmployeeForm();
+                ef.loadEmployees();
+                ef.ShowDialog();
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "CREATE ENVIRONMENT")
+            {
+                // Assumed to have selected an environment at this point
+
+                EnvironmentForm ef = new EnvironmentForm();
+
+                ef.ParentId = long.Parse(this.selectedItem.Tag.ToString());
+
+                MessageBox.Show(this.selectedItem.Tag.ToString());
+
+                ef.ShowDialog();
 
             }
-            
+            else if (this.comboBox1.SelectedItem.ToString() == "CREATE RISK")
+            {
+
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "CREATE PROPOSAL")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "CREATE TRIAL")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "MODIFY ENVIRONMENT")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "MODIFY RISK")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "MODIFY PROPOSAL")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "MODIFY TRIAL")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "DELETE ENVIRONMENT")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "DELETE RISK")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "DELETE PROPOSAL")
+            {
+
+            }
+            else if (this.comboBox1.SelectedItem.ToString() == "DELETE TRIAL")
+            {
+
+            }
+
         }
 
         private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
@@ -323,11 +423,12 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-
+                    this.comboBox1.Items.Add("MODIFY");
                 }
                 if (this.employeePermission >= 3)
                 {
                     this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
 
@@ -349,11 +450,12 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-
+                    this.comboBox1.Items.Add("MODIFY");
                 }
                 if (this.employeePermission >= 3)
                 {
                     this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
 
@@ -375,11 +477,12 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-
+                    this.comboBox1.Items.Add("MODIFY");
                 }
                 if (this.employeePermission >= 3)
                 {
                     this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
 
@@ -406,15 +509,29 @@ namespace RMS
             {
                 string text = "";
 
-                text += $"HAZARD: {reader.GetString(6)}\r\n\r\n";
-                text += $"SEVERITY: {reader.GetInt32(3)}\r\n\r\n";
-                text += $"PROBABILITY: {reader.GetInt32(4)}\r\n\r\n";
-                text += $"DETECTABILITY: {reader.GetInt32(5)}\r\n\r\n";
-                text += $"EVALUATION: {reader.GetString(7)}\r\n\r\n";
-                text += $"COST: ${reader.GetInt32(8)} {reader.GetString(9)}";
+                text += $"SEVERITY ( {reader.GetInt32(3)} ) PROBABILITY ( {reader.GetInt32(4)} ) DETECTABILITY ( {reader.GetInt32(5)} )\r\n\r\n";
+
+
+                text += $"HAZARD\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(6)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+                text += $"EVALUATION\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(7)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+                text += $"COST\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"${reader.GetInt32(8)} every {reader.GetInt32(9)} day(s)\r\n";
+                text += $"--------------------------------";
+
 
                 this.textBox4.Text = text;
             }
+
+            reader.Close();
         }
 
         private void displayProposal(string id, ref SQLiteConnection connection)
@@ -429,12 +546,26 @@ namespace RMS
                 string text = "";
 
                 
-                text += $"ANALYSIS: {reader.GetString(3)}\r\n\r\n";
-                text += $"TREATMENT: {reader.GetString(4)}\r\n\r\n";
-                text += $"ESTIMATED NET COST: ${reader.GetInt32(5)} {reader.GetString(6)}";
+                text += $"ANALYSIS\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(3)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+                text += $"TREATMENT\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(4)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+                text += $"ESTIMATED NET COST\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"${reader.GetInt32(5)} every {reader.GetInt32(6)} day(s)\r\n";
+                text += $"--------------------------------";
+                
 
                 this.textBox4.Text = text;
             }
+
+            reader.Close();
         }
 
         private void displayTrial(string id, ref SQLiteConnection connection)
@@ -447,17 +578,34 @@ namespace RMS
             {
                 string text = "";
 
-             
-                text += $"ASSESSMENT: {reader.GetString(3)}\r\n\r\n";
-                text += $"VERDICT: {reader.GetString(4)}\r\n\r\n";
-                text += $"NET COST: ${reader.GetInt32(5)} {reader.GetString(6)}";
+
+                text += $"ASSESSMENT\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(3)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+                text += $"VERDICT\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"{reader.GetString(4)}\r\n";
+                text += $"--------------------------------\r\n\r\n";
+
+
+                text += $"NET COST\r\n";
+                text += $"--------------------------------\r\n";
+                text += $"${reader.GetInt32(5)} every {reader.GetInt32(6)} day(s)\r\n";
+                text += $"--------------------------------";
 
                 this.textBox4.Text = text;
             }
+
+            reader.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.populateBrowseEnvironmentTree();
         }
         // end of display functions for information box
-
-        
 
     }
 }

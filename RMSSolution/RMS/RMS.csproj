@@ -122,12 +122,6 @@
       <DependentUpon>TrialForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="ValidationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ValidationForm.Designer.cs">
-      <DependentUpon>ValidationForm.cs</DependentUpon>
-    </Compile>
     <Content Include="x64\SQLite.Interop.dll" />
     <Content Include="x86\SQLite.Interop.dll" />
     <EmbeddedResource Include="EmployeeForm.resx">
@@ -156,9 +150,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TrialForm.resx">
       <DependentUpon>TrialForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ValidationForm.resx">
-      <DependentUpon>ValidationForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
