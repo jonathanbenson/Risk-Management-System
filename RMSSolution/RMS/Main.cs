@@ -208,7 +208,7 @@ namespace RMS
             }
 
             environmentReader.Close();
-
+            
             connection2.Close();
 
             if (treeView1.SelectedNode.Tag == null)
@@ -301,11 +301,11 @@ namespace RMS
             }
             if (this.employeePermission >= 2)
             {
-                this.comboBox1.Items.Add("MODIFY");
+                this.comboBox1.Items.Add("MODIFY ENVIRONMENT");
             }
             if (this.employeePermission >= 3)
             {
-                this.comboBox1.Items.Add("DELETE");
+                this.comboBox1.Items.Add("DELETE ENVIRONMENT");
                 this.comboBox1.Items.Add("MANAGE EMPLOYEES");
             }
 
@@ -333,13 +333,13 @@ namespace RMS
             {
                 // Assumed to have selected an environment at this point
 
-                EnvironmentForm ef = new EnvironmentForm();
+                EnvironmentForm ef = new EnvironmentForm("CREATE ENVIRONMENT");
 
                 ef.ParentId = long.Parse(this.selectedItem.Tag.ToString());
 
-                MessageBox.Show(this.selectedItem.Tag.ToString());
-
                 ef.ShowDialog();
+
+                this.populateBrowseEnvironmentTree();
 
             }
             else if (this.comboBox1.SelectedItem.ToString() == "CREATE RISK")
@@ -357,7 +357,15 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "MODIFY ENVIRONMENT")
             {
+                // Assumed to have selected an environment at this point
 
+                EnvironmentForm ef = new EnvironmentForm("MODIFY ENVIRONMENT");
+
+                ef.ParentId = long.Parse(this.selectedItem.Tag.ToString());
+
+                ef.ShowDialog();
+
+                this.populateBrowseEnvironmentTree();
             }
             else if (this.comboBox1.SelectedItem.ToString() == "MODIFY RISK")
             {
@@ -373,6 +381,26 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "DELETE ENVIRONMENT")
             {
+
+                // check to see if environment has any child nodes
+                // user cannot delete any environments that have sub environments or risks
+
+                if (this.selectedItem.Nodes.Count != 0 || this.treeView2.Nodes.Count != 0)
+                {
+                    MessageBox.Show("Error. Cannot delete an environment with sub environments or risks.");
+                }
+                else
+                {
+                    EnvironmentForm ef = new EnvironmentForm("DELETE ENVIRONMENT");
+
+                    ef.ParentId = long.Parse(this.selectedItem.Tag.ToString());
+
+
+                    ef.ShowDialog();
+
+                    this.populateBrowseEnvironmentTree();
+
+                }
 
             }
             else if (this.comboBox1.SelectedItem.ToString() == "DELETE RISK")
@@ -423,11 +451,11 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-                    this.comboBox1.Items.Add("MODIFY");
+                    this.comboBox1.Items.Add("MODIFY RISK");
                 }
                 if (this.employeePermission >= 3)
                 {
-                    this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("DELETE RISK");
                     this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
@@ -450,11 +478,11 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-                    this.comboBox1.Items.Add("MODIFY");
+                    this.comboBox1.Items.Add("MODIFY PROPOSAL");
                 }
                 if (this.employeePermission >= 3)
                 {
-                    this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("DELETE PROPOSAL");
                     this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
@@ -477,11 +505,11 @@ namespace RMS
                 }
                 if (this.employeePermission >= 2)
                 {
-                    this.comboBox1.Items.Add("MODIFY");
+                    this.comboBox1.Items.Add("MODIFY TRIAL");
                 }
                 if (this.employeePermission >= 3)
                 {
-                    this.comboBox1.Items.Add("DELETE");
+                    this.comboBox1.Items.Add("DELETE TRIAL");
                     this.comboBox1.Items.Add("MANAGE EMPLOYEES");
                 }
 
