@@ -38,7 +38,7 @@ namespace RMS
 
             
             this.label4.Text = this.parentId.ToString();
-            this.textBox3.Text = this.environmentPath(this.parentId, ref connection);
+            this.textBox3.Text = environmentPath(this.parentId, ref connection);
 
             
 
@@ -58,6 +58,9 @@ namespace RMS
 
                 this.textBox1.Text = reader.GetString(3);
                 this.textBox2.Text = reader.GetString(4);
+
+
+
 
                 reader.Close();
             }
@@ -87,7 +90,7 @@ namespace RMS
 
         }
 
-        private string environmentPath(long rootId, ref SQLiteConnection connection)
+        public static string environmentPath(long rootId, ref SQLiteConnection connection)
         {
             // recursively generates an environment path
 
@@ -120,7 +123,7 @@ namespace RMS
                 reader.Close();
                 
 
-                return this.environmentPath(environmentId, ref connection) + @" \ " + name;
+                return environmentPath(environmentId, ref connection) + @" \ " + name;
 
 
             }

@@ -149,6 +149,8 @@ namespace RMS
 
             reader.Close();
             connection.Close();
+
+            this.treeView1.SelectedNode = this.treeView1.Nodes[0];
         }
 
         private void populateBrowseEnvironmentTreeHelper(ref TreeNode tn, long rootId, System.Data.SQLite.SQLiteConnection connection)
@@ -234,7 +236,9 @@ namespace RMS
 
             while (riskReader.Read())
             {
-                TreeNode riskNode = new TreeNode(riskReader.GetString(6));
+
+
+                TreeNode riskNode = new TreeNode(riskReader.GetString(3));
                 riskNode.Tag = "1-" + riskReader.GetInt32(0).ToString();
 
                 // adding proposals underneath the risks
@@ -344,7 +348,13 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "CREATE RISK")
             {
+                RiskForm rf = new RiskForm("CREATE RISK");
 
+                rf.ParentId = long.Parse(this.selectedItem.Tag.ToString());
+
+                rf.ShowDialog();
+
+                this.populateBrowseEnvironmentTree();
 
             }
             else if (this.comboBox1.SelectedItem.ToString() == "CREATE PROPOSAL")
@@ -405,6 +415,24 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "DELETE RISK")
             {
+                if (this.selectedItem.Nodes.Count != 0)
+                {
+                    MessageBox.Show("Error. Cannot delete a risk with proposals.");
+                }
+                else
+                {
+                    RiskForm rf = new RiskForm("DELETE RISK");
+
+                    string tag = this.selectedItem.Tag.ToString();
+
+                    rf.Id = long.Parse(tag.Substring(2, tag.Length - 2));
+
+
+                    rf.ShowDialog();
+
+                    this.populateBrowseEnvironmentTree();
+
+                }
 
             }
             else if (this.comboBox1.SelectedItem.ToString() == "DELETE PROPOSAL")
@@ -537,22 +565,20 @@ namespace RMS
             {
                 string text = "";
 
-                text += $"SEVERITY ( {reader.GetInt32(3)} ) PROBABILITY ( {reader.GetInt32(4)} ) DETECTABILITY ( {reader.GetInt32(5)} )\r\n\r\n";
-
 
                 text += $"HAZARD\r\n";
                 text += $"--------------------------------\r\n";
-                text += $"{reader.GetString(6)}\r\n";
+                text += $"{reader.GetString(3)}\r\n";
                 text += $"--------------------------------\r\n\r\n";
 
                 text += $"EVALUATION\r\n";
                 text += $"--------------------------------\r\n";
-                text += $"{reader.GetString(7)}\r\n";
+                text += $"{reader.GetString(4)}\r\n";
                 text += $"--------------------------------\r\n\r\n";
 
                 text += $"COST\r\n";
                 text += $"--------------------------------\r\n";
-                text += $"${reader.GetInt32(8)} every {reader.GetInt32(9)} day(s)\r\n";
+                text += $"${reader.GetInt32(5)} every {reader.GetInt32(6)} {reader.GetString(7)}\r\n";
                 text += $"--------------------------------";
 
 
