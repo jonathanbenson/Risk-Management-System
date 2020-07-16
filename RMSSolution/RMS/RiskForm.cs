@@ -58,6 +58,7 @@ namespace RMS
                 // nothing is readonly but fills in the name and description fields with their previous values
                 var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {this.id}", connection);
 
+                MessageBox.Show(this.id.ToString());
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 reader.Read();
@@ -170,11 +171,11 @@ namespace RMS
                 }
 
                 
-                string environmentId = this.parentId.ToString();
+                long environmentId = this.parentId;
                 string hazard = this.textBox1.Text.ToString();
                 string evaluation = this.textBox2.Text.ToString();
-                string cost = Convert.ToInt32(this.numericUpDown1.Value).ToString();
-                string period = Convert.ToInt32(this.numericUpDown2.Value).ToString();
+                long cost = long.Parse(this.numericUpDown1.Value.ToString());
+                long period = long.Parse(this.numericUpDown2.Value.ToString());
                 string periodUnit = this.comboBox1.SelectedItem.ToString();
 
                 MessageBox.Show(cost.ToString());
@@ -199,7 +200,32 @@ namespace RMS
             }
             else if (this.action == "MODIFY RISK")
             {
-                return;
+                // updating of name and description only...CANNOT UPDATE THE PARENTID OF THE ENVIRONMENT
+
+                string hazard = this.textBox1.Text;
+                string evaluation = this.textBox2.Text;
+                long cost = long.Parse(this.numericUpDown1.Value.ToString());
+                long period = long.Parse(this.numericUpDown2.Value.ToString());
+                string periodUnit = this.comboBox1.SelectedItem.ToString();
+                
+                var command = new SQLiteCommand($"" +
+                    $"UPDATE Risk SET " +
+                    $"HAZARD = '{hazard}', " +
+                    $"EVALUATION = '{evaluation}', " +
+                    $"COST = {cost}, " +
+                    $"PERIOD = {period}, " +
+                    $"PERIODUNIT = '{periodUnit}'" +
+                    $"WHERE ID = {this.Id}", connection);
+
+                if (!Convert.ToBoolean(command.ExecuteNonQuery()))
+                {
+                    MessageBox.Show("Error in querying database");
+                }
+                else
+                {
+                    MessageBox.Show("Successfully queried database");
+                    this.Dispose();
+                }
 
             }
             else if (this.action == "DELETE RISK")

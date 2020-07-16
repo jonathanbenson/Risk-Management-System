@@ -126,9 +126,9 @@
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(121, 278);
+            this.numericUpDown4.Location = new System.Drawing.Point(86, 278);
             this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown4.Size = new System.Drawing.Size(95, 20);
             this.numericUpDown4.TabIndex = 40;
             // 
             // label8
@@ -136,9 +136,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(15, 280);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(81, 13);
+            this.label8.Size = new System.Drawing.Size(62, 13);
             this.label8.TabIndex = 39;
-            this.label8.Text = "Residual Cost $";
+            this.label8.Text = "Res. Cost $";
             // 
             // numericUpDown2
             // 
@@ -158,9 +158,9 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(121, 252);
+            this.numericUpDown1.Location = new System.Drawing.Point(86, 252);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(95, 20);
             this.numericUpDown1.TabIndex = 36;
             // 
             // label4
@@ -168,9 +168,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(15, 254);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 13);
+            this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 35;
-            this.label4.Text = "Preventative Cost $";
+            this.label4.Text = "Prev. Cost $";
             // 
             // TrialForm
             // 

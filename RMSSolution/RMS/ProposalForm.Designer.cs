@@ -54,9 +54,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 257);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(121, 13);
+            this.label4.Size = new System.Drawing.Size(86, 13);
             this.label4.TabIndex = 24;
-            this.label4.Text = "Est. Preventative Cost $";
+            this.label4.Text = "Est. Prev. Cost $";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // button2
@@ -120,9 +120,9 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(139, 255);
+            this.numericUpDown1.Location = new System.Drawing.Point(104, 255);
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(95, 20);
             this.numericUpDown1.TabIndex = 25;
             // 
             // numericUpDown3
@@ -143,9 +143,9 @@
             // 
             // numericUpDown4
             // 
-            this.numericUpDown4.Location = new System.Drawing.Point(139, 281);
+            this.numericUpDown4.Location = new System.Drawing.Point(104, 281);
             this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown4.Size = new System.Drawing.Size(95, 20);
             this.numericUpDown4.TabIndex = 30;
             // 
             // label8
@@ -153,9 +153,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(12, 283);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(102, 13);
+            this.label8.Size = new System.Drawing.Size(83, 13);
             this.label8.TabIndex = 29;
-            this.label8.Text = "Est. Residual Cost $";
+            this.label8.Text = "Est. Res. Cost $";
             // 
             // comboBox1
             // 

@@ -49,9 +49,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Hazard*";
+            this.label2.Text = "Hazard";
             // 
             // textBox1
             // 
@@ -75,9 +75,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 48);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 13);
+            this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Evaluation*";
+            this.label3.Text = "Evaluation";
             // 
             // textBox2
             // 
@@ -89,7 +89,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(108, 178);
+            this.numericUpDown1.Location = new System.Drawing.Point(104, 178);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             -727379968,
             232,
@@ -101,7 +101,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(103, 20);
             this.numericUpDown1.TabIndex = 13;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
@@ -114,9 +114,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 180);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(86, 13);
             this.label4.TabIndex = 14;
-            this.label4.Text = "Estimated Cost* $";
+            this.label4.Text = "Estimated Cost $";
             // 
             // label1
             // 
@@ -162,9 +162,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 201);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(116, 13);
+            this.label7.Size = new System.Drawing.Size(112, 13);
             this.label7.TabIndex = 23;
-            this.label7.Text = "Contextual Information*";
+            this.label7.Text = "Contextual Information";
             // 
             // textBox4
             // 

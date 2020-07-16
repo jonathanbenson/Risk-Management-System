@@ -379,6 +379,19 @@ namespace RMS
             }
             else if (this.comboBox1.SelectedItem.ToString() == "MODIFY RISK")
             {
+                // Assumed to have selected an environment at this point
+
+                RiskForm rf = new RiskForm("MODIFY RISK");
+
+                string tag = this.selectedItem.Tag.ToString();
+
+                rf.Id = long.Parse(tag.Substring(2, tag.Length - 2));
+
+                MessageBox.Show(rf.Id.ToString());
+
+                rf.ShowDialog();
+
+                this.populateBrowseEnvironmentTree();
 
             }
             else if (this.comboBox1.SelectedItem.ToString() == "MODIFY PROPOSAL")
@@ -576,7 +589,7 @@ namespace RMS
                 text += $"{reader.GetString(4)}\r\n";
                 text += $"--------------------------------\r\n\r\n";
 
-                text += $"COST\r\n";
+                text += $"EST. COST\r\n";
                 text += $"--------------------------------\r\n";
                 text += $"${reader.GetInt32(5)} every {reader.GetInt32(6)} {reader.GetString(7)}\r\n";
                 text += $"--------------------------------";
@@ -610,7 +623,7 @@ namespace RMS
                 text += $"{reader.GetString(4)}\r\n";
                 text += $"--------------------------------\r\n\r\n";
 
-                text += $"ESTIMATED NET COST\r\n";
+                text += $"EST. NET COST\r\n";
                 text += $"--------------------------------\r\n";
                 text += $"${reader.GetInt32(5)} every {reader.GetInt32(6)} day(s)\r\n";
                 text += $"--------------------------------";
