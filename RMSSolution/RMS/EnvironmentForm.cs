@@ -142,9 +142,9 @@ namespace RMS
 
             if (this.action == "CREATE ENVIRONMENT")
             {
-                if (this.textBox1.Text.Length == 0 || this.textBox2.Text.Length == 0 || this.textBox4.Text.Length == 0)
+                if (this.textBox1.Text.Length == 0 || this.textBox2.Text.Length == 0)
                 {
-                    MessageBox.Show("Error. Any field with (*) cannot be left blank.");
+                    MessageBox.Show("Error. All fields must be completed.");
                     return;
                 }
 
@@ -179,11 +179,6 @@ namespace RMS
             }
             else if (this.action == "DELETE ENVIRONMENT")
             {
-                if (this.textBox4.Text.Length == 0)
-                {
-                    MessageBox.Show("Error. Any field with (*) cannot be left blank.");
-                    return;
-                }
 
                 var command = new SQLiteCommand($"UPDATE Environment SET STATUS = 0 WHERE ID = {this.parentId}", connection);
 

@@ -31,7 +31,6 @@ namespace RMS
 
         private void RiskForm_Load(object sender, EventArgs e)
         {
-            this.comboBox1.Items.Add("ONE-TIME");
             this.comboBox1.Items.Add("DAYS");
             this.comboBox1.Items.Add("WEEKS");
             this.comboBox1.Items.Add("MONTHS");
@@ -55,6 +54,8 @@ namespace RMS
             }
             else if (this.action == "MODIFY RISK")
             {
+                this.Text = "ACTION: MODIFY RISK";
+
                 // nothing is readonly but fills in the name and description fields with their previous values
                 var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {this.id}", connection);
 
@@ -103,6 +104,8 @@ namespace RMS
             }
             else if (this.action == "DELETE RISK")
             {
+                this.Text = "DELETE: CREATE RISK";
+
                 // nothing is readonly but fills in the name and description fields with their previous values
                 var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {this.id}", connection);
 
@@ -164,7 +167,7 @@ namespace RMS
 
             if (this.action == "CREATE RISK")
             {
-                if (this.textBox1.Text.Length == 0 || this.textBox2.Text.Length == 0 || this.textBox4.Text.Length == 0 || this.comboBox1.SelectedIndex == -1)
+                if (this.textBox1.Text.Length == 0 || this.textBox2.Text.Length == 0 || this.comboBox1.SelectedIndex == -1)
                 {
                     MessageBox.Show("Error. Any field with (*) cannot be left blank.");
                     return;
@@ -230,12 +233,6 @@ namespace RMS
             }
             else if (this.action == "DELETE RISK")
             {
-
-                if (this.textBox4.Text.Length == 0)
-                {
-                    MessageBox.Show("Error. Any field with (*) cannot be left blank.");
-                    return;
-                }
 
                 var command = new SQLiteCommand($"UPDATE Risk SET STATUS = 0 WHERE ID = {this.Id}", connection);
 

@@ -38,8 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +60,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(15, 290);
+            this.button2.Location = new System.Drawing.Point(12, 204);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(373, 23);
             this.button2.TabIndex = 11;
@@ -157,31 +155,11 @@
             this.comboBox1.Size = new System.Drawing.Size(70, 21);
             this.comboBox1.TabIndex = 20;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 201);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(112, 13);
-            this.label7.TabIndex = 23;
-            this.label7.Text = "Contextual Information";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(15, 217);
-            this.textBox4.MaxLength = 500;
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(374, 66);
-            this.textBox4.TabIndex = 22;
-            // 
             // RiskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 319);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox4);
+            this.ClientSize = new System.Drawing.Size(400, 235);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.label1);
@@ -213,7 +191,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox4;
     }
 }

@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RMS.exe" size="40888">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RMS.exe" size="35768">
       <assemblyIdentity name="RMS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4QjMldUJEAr9ZF6MXDtOgbJNiHKYt5l0/OLE7uEdWPc=</dsig:DigestValue>
+        <dsig:DigestValue>4Da9J33E8NfFCgltHPoCcfKs2xbdBNlvzdiuunNiKbs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -71,7 +71,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>oJ5yCVIVvE0sVUMrvqTaeLgy8PbOFCxx2RYKu4KBlKY=</dsig:DigestValue>
+      <dsig:DigestValue>RUGVt5xGRvUgac1oldleAj8GDeaZDNn4DzASApSYYfY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="RMS.exe.config" size="365">

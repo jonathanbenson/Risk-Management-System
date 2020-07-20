@@ -82,12 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EmployeeForm.Designer.cs">
-      <DependentUpon>EmployeeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EnvironmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,9 +118,6 @@
     <Compile Include="Utility.cs" />
     <Content Include="x64\SQLite.Interop.dll" />
     <Content Include="x86\SQLite.Interop.dll" />
-    <EmbeddedResource Include="EmployeeForm.resx">
-      <DependentUpon>EmployeeForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EnvironmentForm.resx">
       <DependentUpon>EnvironmentForm.cs</DependentUpon>
     </EmbeddedResource>

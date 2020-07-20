@@ -39,13 +39,11 @@ namespace RMS
          * DELETE PROPOSAL
          * DELETE TRIAL
          * 
-         * MANAGE EMPLOYEES -> MANAGE EMPLOYEES FORM -> VALIDATION FORM
          * 
          */
         
 
-        private long dbemployeeid; // keeps track of the employee id number
-        private long employeePermission; // keeps track of the permission of the employee logged in
+        
 
         TreeNode selectedItem;
 
@@ -59,52 +57,17 @@ namespace RMS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // employee authentication
-            if (!Utility.isIntLength4(this.textBox1.Text.ToString()) || !Utility.isIntLength4(this.textBox2.Text.ToString()))
+
+            // administrator authentication
+            if (this.textBox1.Text != "admin" && this.textBox2.Text != "Administrator")
             {
-                MessageBox.Show("Error. Employee ID and Password must be a 4-digit number.");
-                return;
-            }
-            
-
-
-            SQLiteHandler handl = new SQLiteHandler();
-
-            var connection = handl.getConnection();
-
-            connection.Open();
-
-            var command = new SQLiteCommand($"SELECT * FROM Employee WHERE STATUS = 1 AND EMPLOYEEID = {this.textBox1.Text} AND PASSWORD = {this.textBox2.Text}", connection);
-
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            if (reader.Read())
-            {
-                this.groupBox2.Visible = true;
-
-                this.dbemployeeid = reader.GetInt32(0);
-                this.employeePermission = reader.GetInt32(4);
-
-
-                
+                MessageBox.Show("Invalid Username or Password.");
             }
             else
             {
-                MessageBox.Show("Invalid Employee ID or Password");
+                this.groupBox2.Visible = true;
             }
 
-            reader.Close();
-
-            // end of employee authentication
-
-           
-            if (employeePermission == 3)
-            {
-                this.comboBox1.Items.Add("MANAGE EMPLOYEES");
-            }
-
-
-            connection.Close();
         }
 
 
@@ -292,26 +255,17 @@ namespace RMS
 
             // updating selected item type and selected item description text boxes, as well as combo box
 
-            
+
 
 
 
             // updating combo box items
+            this.comboBox1.Items.Add("CREATE RISK");
+            this.comboBox1.Items.Add("CREATE ENVIRONMENT");
+            this.comboBox1.Items.Add("MODIFY ENVIRONMENT");
+            this.comboBox1.Items.Add("DELETE ENVIRONMENT");
 
-            if (this.employeePermission >= 1)
-            {
-                this.comboBox1.Items.Add("CREATE RISK");
-                this.comboBox1.Items.Add("CREATE ENVIRONMENT");
-            }
-            if (this.employeePermission >= 2)
-            {
-                this.comboBox1.Items.Add("MODIFY ENVIRONMENT");
-            }
-            if (this.employeePermission >= 3)
-            {
-                this.comboBox1.Items.Add("DELETE ENVIRONMENT");
-                this.comboBox1.Items.Add("MANAGE EMPLOYEES");
-            }
+           
 
 
             // updating selected item type and selected item description text boxes
@@ -326,12 +280,6 @@ namespace RMS
             if (this.comboBox1.SelectedIndex == -1)
             {
                 MessageBox.Show("You must select an action!");
-            }
-            else if (this.comboBox1.SelectedItem.ToString() == "MANAGE EMPLOYEES")
-            {
-                EmployeeForm ef = new EmployeeForm();
-                ef.loadEmployees();
-                ef.ShowDialog();
             }
             else if (this.comboBox1.SelectedItem.ToString() == "CREATE ENVIRONMENT")
             {
@@ -485,21 +433,11 @@ namespace RMS
                 // displaying item information in text box to the right
                 this.displayRisk(tag.Substring(2, tag.Length - 2), ref connection);
 
-                // populatitng combo box of actions
-                if (this.employeePermission >= 1)
-                {
-                    this.comboBox1.Items.Add("CREATE PROPOSAL");
-                }
-                if (this.employeePermission >= 2)
-                {
-                    this.comboBox1.Items.Add("MODIFY RISK");
-                }
-                if (this.employeePermission >= 3)
-                {
-                    this.comboBox1.Items.Add("DELETE RISK");
-                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
-                }
-
+                // populating combo box of actions
+                this.comboBox1.Items.Add("CREATE PROPOSAL");
+                this.comboBox1.Items.Add("MODIFY RISK");
+                this.comboBox1.Items.Add("DELETE RISK");
+               
 
             }
             else if (tag[0] == '2')
@@ -513,19 +451,10 @@ namespace RMS
                 this.displayProposal(tag.Substring(2, tag.Length - 2), ref connection);
 
                 // populating combo box of items
-                if (this.employeePermission >= 1)
-                {
-                    this.comboBox1.Items.Add("CREATE TRIAL");
-                }
-                if (this.employeePermission >= 2)
-                {
-                    this.comboBox1.Items.Add("MODIFY PROPOSAL");
-                }
-                if (this.employeePermission >= 3)
-                {
-                    this.comboBox1.Items.Add("DELETE PROPOSAL");
-                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
-                }
+                this.comboBox1.Items.Add("CREATE TRIAL");
+                this.comboBox1.Items.Add("MODIFY PROPOSAL");
+                this.comboBox1.Items.Add("DELETE PROPOSAL");
+               
 
 
             }
@@ -540,21 +469,9 @@ namespace RMS
 
 
                 // populating combo box of items
-                if (this.employeePermission >= 1)
-                {
-
-                }
-                if (this.employeePermission >= 2)
-                {
-                    this.comboBox1.Items.Add("MODIFY TRIAL");
-                }
-                if (this.employeePermission >= 3)
-                {
-                    this.comboBox1.Items.Add("DELETE TRIAL");
-                    this.comboBox1.Items.Add("MANAGE EMPLOYEES");
-                }
-
-
+                this.comboBox1.Items.Add("MODIFY TRIAL");
+                this.comboBox1.Items.Add("DELETE TRIAL");
+                
 
             }
 
