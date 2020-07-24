@@ -226,7 +226,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.treeView1);
             this.Name = "Main";
-            this.Text = "Browse";
+            this.Text = "Risk Management System";
             this.Load += new System.EventHandler(this.Main_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
