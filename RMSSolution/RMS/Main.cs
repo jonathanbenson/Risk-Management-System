@@ -589,6 +589,11 @@ namespace RMS
         {
             this.populateBrowseEnvironmentTree();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
         // end of display functions for information box
 
     }

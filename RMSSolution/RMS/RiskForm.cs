@@ -59,7 +59,7 @@ namespace RMS
                 // nothing is readonly but fills in the name and description fields with their previous values
                 var command = new SQLiteCommand($"SELECT * FROM Risk WHERE STATUS = 1 AND ID = {this.id}", connection);
 
-                MessageBox.Show(this.id.ToString());
+                
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 reader.Read();
@@ -169,7 +169,7 @@ namespace RMS
             {
                 if (this.textBox1.Text.Length == 0 || this.textBox2.Text.Length == 0 || this.comboBox1.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Error. Any field with (*) cannot be left blank.");
+                    MessageBox.Show("Error. No fields can be left blank.");
                     return;
                 }
 
@@ -181,12 +181,11 @@ namespace RMS
                 long period = long.Parse(this.numericUpDown2.Value.ToString());
                 string periodUnit = this.comboBox1.SelectedItem.ToString();
 
-                MessageBox.Show(cost.ToString());
-                MessageBox.Show(period.ToString());
+               
 
                 string cmd = $"INSERT INTO Risk (STATUS, ENVIRONMENTID, HAZARD, EVALUATION, COST, PERIOD, PERIODUNIT) VALUES (1, {environmentId}, '{hazard}', '{evaluation}', {cost}, {period}, '{periodUnit}')";
 
-                MessageBox.Show(cmd);
+                
                     
                 var command = new SQLiteCommand(cmd, connection);
 
